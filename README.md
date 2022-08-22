@@ -1,5 +1,5 @@
 # Telescope
-[![Discord server](https://img.shields.io/discord/:991498223271288872?color=%237289da&label=discord%20server&logo=discord)](https://discord.gg/ezSpNBH6JS)
+[![Discord server](https://img.shields.io/discord/991498223929790496)](https://discord.gg/ezSpNBH6JS)
 
 🤖 **A simple, customizable Discord bot that announces Twitch streams going live (plus a bunch of silly extras).**
 
