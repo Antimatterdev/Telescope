@@ -1,9 +1,9 @@
 # Telescope
-[![Discord server](https://img.shields.io/discord/411670416269115394?color=%237289da&label=discord%20server&logo=discord)](https://discord.gg/Antimatter's-Cosmodrome)
+[![Discord server](https://img.shields.io/discord/991498223271288872?color=%237289da&label=discord%20server&logo=discord)](https://discord.gg/ezSpNBH6JS)
 
 🤖 **A simple, customizable Discord bot that announces Twitch streams going live (plus a bunch of silly extras).**
 
-![Telescope](Insert-Photo-Of-Telescope-Working)
+![Telescope](https://i.ibb.co/BP8H30g/image.png)
 
 ## Features
 
@@ -26,9 +26,9 @@ https://nodejs.org/en/download/
 
 ### Installation
 
-To set up Telescope, download the latest [repository ZIP](https://github.com/antimatterdev/telescope/archive/master.zip) or clone it using `git`:
+To set up Telescope, download the latest [repository ZIP](https://github.com/Antimatterdev/Telescope/archive/master.zip) or clone it using `git`:
 
-    git clone https://github.com/antimatterdev/telescope.git
+    git clone https://github.com/Antimatterdev/Telescope.git
     
 Once installed, enter the directory and install the dependencies:
 
