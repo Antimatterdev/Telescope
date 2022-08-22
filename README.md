@@ -1,7 +1,7 @@
 # Telescope
 [![Discord server](https://img.shields.io/discord/991498223271288872)](https://discord.gg/ezSpNBH6JS)
 
-🤖 **A simple, customizable Discord bot that announces Twitch streams going live (plus a bunch of silly extras).**
+🤖 **A simple, customizable Discord bot that announces Twitch streams going live.**
 
 ![Telescope](https://i.ibb.co/BP8H30g/image.png)
 
