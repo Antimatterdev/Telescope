@@ -26,7 +26,7 @@ https://nodejs.org/en/download/
 
 ### Installation
 
-To set up Telescope, download the latest [repository ZIP](https://github.com/Antimatterdev/Telescope/archive/master.zip) or clone it using `git`:
+To set up Telescope, download the latest [repository ZIP](https://github.com/Antimatterdev/Telescope/releases/download/Release/Telescope.zip) or clone it using `git`:
 
     git clone https://github.com/Antimatterdev/Telescope.git
     
