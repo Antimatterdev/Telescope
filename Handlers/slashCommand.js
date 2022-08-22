@@ -14,10 +14,10 @@ const rest = new REST({ version: '9' }).setToken(TOKEN);
 
 module.exports = (client) => {
 	const slashCommands = []; 
-	const files = fs.readdirSync(`./slashCommands/`).filter(file => file.endsWith('.js'));
+	const files = fs.readdirSync(`./SlashCommands/`).filter(file => file.endsWith('.js'));
 
 		for(const file of files) {
-				const slashCommand = require(`../slashCommands/${file}`);
+				const slashCommand = require(`../SlashCommands/${file}`);
 				slashCommands.push({
 					name: slashCommand.name,
 					description: slashCommand.description,
