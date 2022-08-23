@@ -1,20 +1,19 @@
 {
-  "twitch_channels": "<SOME_TWITCH_CHANNEL_NAME>,<SOME_TWITCH_CHANNEL_NAME>",
-  "discord_announce_channel": "<DISCORD_CHANNEL_NAME>",
+  "twitch_channels": "",
+  "discord_announce_channel": "command-module",
   "discord_mentions": {
-    "<SOME_TWITCH_CHANNEL_NAME>": "everyone",
-    "<SOME_TWITCH_CHANNEL_NAME>": "here"
+    "AntimatterDev":"everyone"
   },
-  "discord_bot_token": "<SET_ME>",
-  "twitch_client_id": "<SET_ME>",
-  "twitch_oauth_token": "<SET_ME>",
+  "discord_bot_token": "OTMzODI1ODQzODA4MDU1NDY2.GZ1Qxp.aXznB65VD5YYxj4qpxNHy_D6IGysULFtJdbT1A",
+  "twitch_client_id": "gp762nuuoqcoxypju8c569th9wz7q5",
+  "twitch_oauth_token": "jo7widfet5yw2uif1pign78uelz699",
   "twitch_check_interval_ms": 60000,
-  "twitch_use_boxart": true
+  "twitch_use_boxart": true,
   "messages":{
     "cooldown_message":"You are on `<duration>` cooldown!",
-    "live_message":"<SET_ME>",
-    "end_message":"<SET_ME>"
+    "live_message":"**[INCOMING TRANSMISSION]**",
+    "end_message":"**[END OF TRANSMISSION]**"
   },
-  "clientId":"<SET_ME>",
-  "guildId":"<SET_ME>"
+  "clientId":"933825843808055466",
+  "guildId":"991498223271288872"
 }

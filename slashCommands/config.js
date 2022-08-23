@@ -10,7 +10,7 @@ module.exports = {
 	options: [
         {
             name: 'type',
-            description: 'twitch_channel, announce_channel',
+            description: 'announce_channel (string), check_interval (integer), boxart (true/false)',
             type: 3,
             required: true
         },
@@ -19,12 +19,6 @@ module.exports = {
             description: 'The value to change in the config',
             type: 3,
             required: true
-        },
-        {
-            name: 'operation',
-            description: 'Specify Action if changing channels to be watched',
-            type: 3,
-            required: false
         },
     ],
 	run: async (client, interaction) => {
@@ -39,20 +33,19 @@ module.exports = {
     return;
   }
   // increase data order count by 1
-  if(type.toLowerCase()=="twitch_channel"){
-  if(operation.toLowerCase()=="add"){
-  data.twitch_channels = data.twitch_channels+value.toLowerCase()+","
-  fs.writeFile("./Config/config.json", JSON.stringify(data), err => {
-    if (err) logging.error("[Config]","Error writing file:", err);
-  });
-  }else if(operation.toLowerCase()=="remove"){
-    data.twitch_channels = data.twitch_channels.replace(value.toLowerCase()+",","")
-  fs.writeFile("./Config/config.json", JSON.stringify(data), err => {
-    if (err) logging.error("[Config]","Error writing file:", err);
-  });
-  }
-        }else if(type.toLowerCase()=="announce_channel"){
+    if(type.toLowerCase()=="announce_channel"){
     data.discord_announce_channel=value.toLowerCase()
+      fs.writeFile("./Config/config.json", JSON.stringify(data), err => {
+    if (err) logging.error("[Config]","Error writing file:", err);
+  });
+        }else if(type.toLowerCase()=="check_interval"){
+          data.twitch_check_interval_ms=parseInt(value.toLowerCase())
+      fs.writeFile("./Config/config.json", JSON.stringify(data), err => {
+    if (err) logging.error("[Config]","Error writing file:", err);
+  });
+        }else if(type.toLowerCase()=="boxart"){
+          let boolOutput = (value.toLowerCase() === "true");
+          data.twitch_use_boxart=boolOutput
       fs.writeFile("./Config/config.json", JSON.stringify(data), err => {
     if (err) logging.error("[Config]","Error writing file:", err);
   });
