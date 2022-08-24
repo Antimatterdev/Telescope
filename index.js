@@ -63,7 +63,7 @@ client.on('ready', () => {
     TwitchMonitor.start();
 
     // Activate Youtube integration
-    YoutubeMonitor.start();
+    YoutubeMonitor.start(client);
 });
 
 client.on("guildCreate", guild => {

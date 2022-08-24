@@ -4,9 +4,9 @@ const request = require('request');
 const config = require('../Config/config.json');
 const logging = require("../Helpers/logging")
 const DiscordChannelSync = require("../Handlers/discord-channel-sync");
-
+const Discord = require('discord.js');
 class YoutubeMonitor {
-    static start() {
+    static start(client) {
         if (!config.discord_youtube_channel) {
             // Youtube integration is disabled (no channel configured)
             return;
@@ -30,10 +30,10 @@ class YoutubeMonitor {
             this.doCheck();
         }, YoutubeMonitor.YT_CHECK_INTERVAL_SECS * 1000);
 
-        this.doCheck();
+        this.doCheck(client);
     }
 
-    static doCheck() {
+    static doCheck(client) {
         let fpReq = request(this.feedUrl);
         let fp = new FeedParser();
 
@@ -60,7 +60,6 @@ class YoutubeMonitor {
             let stream = this;
             let meta = this.meta;
             let item;
-
             while (item = stream.read()) {
                 let itemDate = Date.parse(item.pubdate);
 
@@ -73,12 +72,12 @@ class YoutubeMonitor {
 
         fp.on('end', function() {
             if (highestItem) {
-                YoutubeMonitor.handleHighestItem(highestItem);
+                YoutubeMonitor.handleHighestItem(client,highestItem);
             }
         });
     }
 
-    static handleHighestItem(rssItem) {
+    static handleHighestItem(client,rssItem) {
         let lastGuid = this.lastAnnouncedVideoGuid;
         let thisGuid = rssItem.guid;
 
@@ -90,22 +89,24 @@ class YoutubeMonitor {
 
         this.db.put("youtube", { lastAnnouncedVideoGuid: thisGuid });
         this.lastAnnouncedVideoGuid = thisGuid;
-        this.doAnnounce(rssItem);
+        this.doAnnounce(client,rssItem);
     }
 
-    static doAnnounce(rssItem) {
-        this.targetChannels = DiscordChannelSync.getChannelList(global.discordJsClient,
+    static doAnnounce(client,rssItem) {
+        this.targetChannels = DiscordChannelSync.getChannelList(client,
             config.discord_youtube_channel, false);
-
-        let emojiTxtBob = global.getServerEmoji("BOB_USE", true);
-        let formattedMessage = `${rssItem.link} ${emojiTxtBob}`;
-
+        let msgEmbed = new Discord.EmbedBuilder();
+        msgEmbed.setColor(0xFF0000);
+        msgEmbed.setURL(`${rssItem.link}`);
+        msgEmbed.setTitle(`📣 **${rssItem.author} has uploaded a new video**`);
+        msgEmbed.addFields({ name: 'Title', value: rssItem.title, inline:false });
+        msgEmbed.setImage(rssItem.image["url"]);
         for (let i = 0; i < this.targetChannels.length; i++) {
             let targetChannel = this.targetChannels[i];
 
             if (targetChannel) {
                 try {
-                    targetChannel.send(formattedMessage);
+                    targetChannel.send({content:"Sounds of music dance over the airwaves...",embeds:[msgEmbed]});
                 } catch (err) {
                     logging.error('[Youtube]','Announce error:', err);
                 }
@@ -119,7 +120,7 @@ class YoutubeMonitor {
     }
 }
 
-YoutubeMonitor.YT_CHANNEL_ID = "UCz1Z5nKLLXsm5bRoMMuxNqQ";
+YoutubeMonitor.YT_CHANNEL_ID = config.yt_channel_id;
 YoutubeMonitor.YT_FEED_BASE_URL = "https://www.youtube.com/feeds/videos.xml";
 YoutubeMonitor.YT_CHECK_INTERVAL_SECS = 10 * 60;
 

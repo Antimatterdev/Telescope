@@ -13,8 +13,11 @@
   "messages":{
     "cooldown_message":"You are on `<duration>` cooldown!",
     "live_message":"<SET_ME>",
-    "end_message":"<SET_ME>"
+    "end_message":"<SET_ME>",
+    "yt_post_message":"<SET_ME>"
   },
   "clientId":"<SET_ME>",
-  "guildId":"<SET_ME>"
+  "guildId":"<SET_ME>",
+  "discord_youtube_channel":"<SET_ME>",
+  "yt_channel_id":"<SET_ME>"
 }
