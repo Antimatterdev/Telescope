@@ -51,7 +51,7 @@ module.exports = {
   });
         }
 	});
-  		await interaction.reply(`Updated the config value ${type} with the value ${value}`);
+  		await interaction.reply({content:`Updated the config value ${type} with the value ${value}`, ephemeral: true });
   }
 	}catch(err){
     logging.error("[Slash Commands]","Command errored with error: ",err)

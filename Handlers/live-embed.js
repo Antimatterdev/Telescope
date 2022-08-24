@@ -8,8 +8,8 @@ class LiveEmbed {
     const isLive = streamData.type === "live";
     const allowBoxArt = config.twitch_use_boxart;
 
-    let msgEmbed = new Discord.MessageEmbed();
-    msgEmbed.setColor(isLive ? "#9146ff" : "GREY");
+    let msgEmbed = new Discord.EmbedBuilder();
+    msgEmbed.setColor(isLive ? 0x9146ff : 0x808080);
     msgEmbed.setURL(`https://twitch.tv/${(streamData.login || streamData.user_name).toLowerCase()}`);
 
     // Thumbnail
@@ -26,22 +26,22 @@ class LiveEmbed {
     if (isLive) {
       // Title
       msgEmbed.setTitle(`:red_circle: **${streamData.user_name} is live on Twitch!**`);
-      msgEmbed.addField("Title", streamData.title, false);
+      msgEmbed.addFields({ name: 'Title', value: streamData.title, inline:false });
     } else {
       msgEmbed.setTitle(`:white_circle: ${streamData.user_name} was live on Twitch.`);
       msgEmbed.setDescription('The stream has now ended.');
 
-      msgEmbed.addField("Title", streamData.title, true);
+      msgEmbed.addFields({ name: 'Title', value: streamData.title, inline:false });
     }
 
     // Add game
     if (streamData.game) {
-      msgEmbed.addField("Game", streamData.game.name, false);
+      msgEmbed.addFields({ name: 'Game', value: streamData.game.name, inline:false });
     }
 
     if (isLive) {
       // Add status
-      msgEmbed.addField("Status", isLive ? `Live with ${streamData.viewer_count} viewers` : 'Stream has ended', true);
+      msgEmbed.addFields({name:"Status", value: isLive ? `Live with ${streamData.viewer_count} viewers` : 'Stream has ended',inline: true});
 
       // Set main image (stream preview)
       let imageUrl = streamData.thumbnail_url;
@@ -55,12 +55,12 @@ class LiveEmbed {
       let now = moment();
       let startedAt = moment(streamData.started_at);
 
-      msgEmbed.addField("Uptime", humanizeDuration(now - startedAt, {
+      msgEmbed.addFields({name:"Uptime", value: humanizeDuration(now - startedAt, {
         delimiter: ", ",
         largest: 2,
         round: true,
         units: ["y", "mo", "w", "d", "h", "m"]
-      }), true);
+      }), inline: true});
     }
 
     return msgEmbed;

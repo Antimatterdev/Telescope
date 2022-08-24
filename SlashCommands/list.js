@@ -3,7 +3,7 @@ const reader = require("../Helpers/reader")
 const logging = require("../Helpers/logging")
 const fs = require('node:fs');
 const path = require('node:path');
-var output = "";
+var output=""
 module.exports = {
 	name: 'list',
 	description: "Return Config Values or Watched Channels",
@@ -30,13 +30,10 @@ module.exports = {
    }else if(value.toLowerCase()=="config"){
      output="Coming Soon"
    }
-    
-  fs.writeFile("./Config/config.json", JSON.stringify(data), err => {
-    if (err) logging.error("[Config]","Error writing file:", err);
-  });
-	});
-      
-  		await interaction.reply(output);
+	})
+          setTimeout(() => {
+  return interaction.reply({content:output, ephemeral: true })
+}, 500)
   }
 	}catch(err){
     logging.error("[Slash Commands]","Command errored with error: ",err)

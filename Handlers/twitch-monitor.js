@@ -1,9 +1,8 @@
-const config = require('../Config/config.json');
 const TwitchApi = require('../Handlers/twitch-api');
 const MiniDb = require('../Config/minidb');
 const moment = require('moment');
 const logging = require('../Helpers/logging')
-
+const reader = require("../Helpers/reader")
 class TwitchMonitor {
     static __init() {
         this._userDb = new MiniDb("twitch-users-v2");
@@ -17,10 +16,14 @@ class TwitchMonitor {
         this._gameData = this._gameDb.get("game-list") || { };
         this._watchingGameIds = [];
     }
-
     static start() {
+                    reader.jsonReader("./Config/config.json", (err, config) => {
+  if (err) {
+    logging.error("[Config]","Error reading file:", err);
+    return;
+  }
         // Load channel names from config
-        this.channelNames = [];
+        this.channelNames = ["placeholder"];
         config.twitch_channels.split(',').forEach((channelName) => {
             if (channelName) {
                 this.channelNames.push(channelName.toLowerCase());
@@ -28,7 +31,7 @@ class TwitchMonitor {
         });
         if (!this.channelNames.length) {
             logging.error('[TwitchMonitor]', 'No channels configured');
-            return;
+          return;
         }
 
         // Configure polling interval
@@ -48,8 +51,27 @@ class TwitchMonitor {
 
         // Ready!
         logging.twitch('[TwitchMonitor]', `Configured stream status polling for channels: ${this.channelNames.join(', ')} (${checkIntervalMs}ms interval)`);
+                    })
     }
-
+    static reload(){
+reader.jsonReader("./Config/config.json", (err, config) => {
+  if (err) {
+    logging.error("[Config]","Error reading file:", err);
+    return;
+  }
+    this.channelNames = ["placeholder"];
+        config.twitch_channels.split(',').forEach((channelName) => {
+            if (channelName) {
+                this.channelNames.push(channelName.toLowerCase());
+            }
+        });
+        if (!this.channelNames.length) {
+            logging.error('[TwitchMonitor]', 'No channels configured');
+          return;
+        }
+        logging.twitch('[TwitchMonitor]', `Configured stream status polling for channels: ${this.channelNames.join(', ')}`)
+})
+    }
     static refresh(reason) {
         const now = moment();
         logging.twitch('[Twitch]', ` ▪ ▪ ▪ ▪ ▪ Refreshing now (${reason ? reason : "No reason"}) ▪ ▪ ▪ ▪ ▪ `);

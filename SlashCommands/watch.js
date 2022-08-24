@@ -3,6 +3,7 @@ const reader = require("../Helpers/reader")
 const logging = require("../Helpers/logging")
 const fs = require('node:fs');
 const path = require('node:path');
+const TwitchMonitor = require("../Handlers/twitch-monitor");
 module.exports = {
 	name: 'watch',
 	description: "Choose channels to watch for updates",
@@ -30,10 +31,12 @@ module.exports = {
   });
 	});
       
-  		await interaction.reply(`Started watching ${value} for updates`);
+  		await interaction.reply({content:`Started watching ${value} for updates`, ephemeral: true });
+      await TwitchMonitor.reload()
   }
 	}catch(err){
     logging.error("[Slash Commands]","Command errored with error: ",err)
   }
+    
   }
 }

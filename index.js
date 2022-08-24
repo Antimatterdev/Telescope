@@ -195,14 +195,10 @@ TwitchMonitor.onChannelLiveUpdate((streamData) => {
                     // Fetch existing message
                     discordChannel.messages.fetch(existingMsgId)
                       .then((existingMsg) => {
-                        existingMsg.edit(msgFormatted, {
-                          embed: msgEmbed
-                        }).then((message) => {
+                        existingMsg.edit({content: msgFormatted, embeds: [msgEmbed]}).then((message) => {
                           // Clean up entry if no longer live
                           if (!isLive) {
-                            existingMsg.edit(msgFormattedEnd,{
-                              embed: msgEmbed
-                            })
+                            existingMsg.edit({content: msgFormattedEnd,embeds:[msgEmbed]})
                             delete messageHistory[liveMsgDiscrim];
                             liveMessageDb.put('history', messageHistory);
                           }
@@ -255,11 +251,7 @@ TwitchMonitor.onChannelLiveUpdate((streamData) => {
                         msgToSend = msgFormatted + ` ${mentionMode}`
                     }
 
-                    let msgOptions = {
-                        embed: msgEmbed
-                    };
-
-                    discordChannel.send(msgToSend, msgOptions)
+                    discordChannel.send({content: msgToSend,embeds: [msgEmbed]})
                         .then((message) => {
                             logging.discord(`Sent announce msg to #${discordChannel.name} on ${discordChannel.guild.name}`)
 
